@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 public class Starter {
@@ -17,8 +18,9 @@ public class Starter {
 		JPanel panelMain = new JPanel(new GridLayout(6,10));
 		
 		JTextField name = new JTextField();
-		JTextField pass = new JTextField();
+//		JTextField pass = new JTextField();
 		
+		JPasswordField pass = new JPasswordField();
 		name.setText("Name");
 		pass.setText("Pass");
 		
@@ -40,7 +42,9 @@ public class Starter {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				System.out.println("Add: ");
+				System.out.println(name.getText());
+				System.out.println(pass.getPassword());
 				
 			}
 		});
