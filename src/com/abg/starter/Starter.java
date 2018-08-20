@@ -12,10 +12,13 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import com.abg.person.ID;
+
 public class Starter {
 	public static void main(String[] args) {
 		JFrame frame = new JFrame("AddPerson");
 		JPanel panelMain = new JPanel(new GridLayout(6,10));
+		ID id = new ID();
 		
 		JTextField name = new JTextField();
 //		JTextField pass = new JTextField();
@@ -45,6 +48,7 @@ public class Starter {
 				System.out.println("Add: ");
 				System.out.println(name.getText());
 				System.out.println(pass.getPassword());
+				System.out.println(id.idPerson());
 				
 			}
 		});
