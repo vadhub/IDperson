@@ -48,8 +48,7 @@ public class Starter {
 				System.out.println("Add: ");
 				System.out.println(name.getText());
 				System.out.println(pass.getPassword());
-				System.out.println(id.idPerson());
-				
+				System.out.println(id.idPerson());				
 			}
 		});
 		
