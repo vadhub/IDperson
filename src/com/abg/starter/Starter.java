@@ -6,19 +6,43 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import com.abg.connect.Connection;
 import com.abg.person.ID;
 
+
 public class Starter {
+	
+	private static final String url = "jdbc:mysql://localhost:3306/id_person";
+    private static final String user = "root";
+    private static final String password = "1234";
+    
+    private static Connection connect;
+    private static Statement stm;
+    private static ResultSet rs;
+	
 	public static void main(String[] args) {
+		
+		Connection conn = new Connection(url, user, password);
+		
+		connect = conn.connection();
+		
+		stm = ((Object) connect).createStatement();
+		
+		
 		JFrame frame = new JFrame("AddPerson");
 		JPanel panelMain = new JPanel(new GridLayout(6,10));
-		ID id = new ID();
+		ID id = new ID();		
 		
 		JTextField name = new JTextField();
 //		JTextField pass = new JTextField();
