@@ -19,6 +19,7 @@ import javax.swing.JTextField;
 
 import com.abg.connect.Connection;
 import com.abg.person.ID;
+import com.mysql.jdbc.PreparedStatement;
 
 
 public class Starter {
@@ -32,6 +33,11 @@ public class Starter {
     private static ResultSet rs;
 	
 	public static void main(String[] args) throws SQLException, ClassNotFoundException, IllegalAccessException {
+		
+		ID id = new ID();
+		
+		System.out.println(id.idPerson());
+		String query = "INSERT INTO id_person (id, person_name, person_password) VALUES ("+id.idPerson()+", 'Vasya', 1234)";
 
 		Class.forName("com.mysql.jdbc.Driver");
 		
@@ -39,21 +45,23 @@ public class Starter {
 		
 		connect = conn.connection();
 		
-		stm = connect.createStatement();
-		rs = stm.executeQuery("SELECT * FROM id_person");
+//		stm = connect.createStatement();
 		
-		while (rs.next()) {
-            String str = rs.getString("id")+"";
-            System.out.println("Contact:" + str);
-        }
+		PreparedStatement preparedStmt = (PreparedStatement) connect.prepareStatement(query);
 		
-		rs.close();
-        stm.close();
+		preparedStmt.execute();
+		
+//		while (rs.next()) {
+//            String str = rs.getString("id")+"|"+rs.getString("person_name")+"|"+rs.getString("person_password");
+//            System.out.println("Contact:" + str);
+//        }		
+		
+		
+        preparedStmt.close();
         connect.close();
         
 		JFrame frame = new JFrame("AddPerson");
-		JPanel panelMain = new JPanel(new GridLayout(6,10));
-		ID id = new ID();	
+		JPanel panelMain = new JPanel(new GridLayout(6,10));	
 		
 		JTextField name = new JTextField();
 //		JTextField pass = new JTextField();
