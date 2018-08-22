@@ -5,8 +5,7 @@ import java.sql.SQLException;;
 
 
 public class Connection {
-	
-
+	private static java.sql.Connection conn;
 	private static String url;
 	private static String user;
 	private static String password;
@@ -17,10 +16,12 @@ public class Connection {
 		this.password = password;
 	}
 
-	public static Connection connection() {
+	public static java.sql.Connection connection() {
 		try {
-			if (conn != null) conn = (Connection) DriverManager.getConnection(url, user, password);
+			if(conn == null) conn = DriverManager.getConnection(url, user, password);
+			System.out.println("Connect");
 			return conn;
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

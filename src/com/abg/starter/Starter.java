@@ -23,26 +23,37 @@ import com.abg.person.ID;
 
 public class Starter {
 	
-	private static final String url = "jdbc:mysql://localhost:3306/id_person";
+	private static final String url = "jdbc:mysql://localhost:3306/idperson";
     private static final String user = "root";
-    private static final String password = "1234";
+    private static final String password = "";
     
-    private static Connection connect;
+    private static java.sql.Connection connect;
     private static Statement stm;
     private static ResultSet rs;
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException, ClassNotFoundException, IllegalAccessException {
+
+		Class.forName("com.mysql.jdbc.Driver");
 		
-		Connection conn = new Connection(url, user, password);
+		Connection conn =  new Connection(url, user, password);
 		
 		connect = conn.connection();
 		
-		stm = ((Object) connect).createStatement();
+		stm = connect.createStatement();
+		rs = stm.executeQuery("SELECT * FROM id_person");
 		
+		while (rs.next()) {
+            String str = rs.getString("id")+"";
+            System.out.println("Contact:" + str);
+        }
 		
+		rs.close();
+        stm.close();
+        connect.close();
+        
 		JFrame frame = new JFrame("AddPerson");
 		JPanel panelMain = new JPanel(new GridLayout(6,10));
-		ID id = new ID();		
+		ID id = new ID();	
 		
 		JTextField name = new JTextField();
 //		JTextField pass = new JTextField();
