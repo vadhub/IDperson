@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -21,7 +20,6 @@ import com.abg.connect.Connection;
 import com.abg.person.ID;
 import com.mysql.jdbc.PreparedStatement;
 
-
 public class Starter {
 	
 	private static final String url = "jdbc:mysql://localhost:3306/idperson";
@@ -32,33 +30,7 @@ public class Starter {
     private static Statement stm;
     private static ResultSet rs;
 	
-	public static void main(String[] args) throws SQLException, ClassNotFoundException, IllegalAccessException {
-		
-		ID id = new ID();
-		
-		System.out.println(id.idPerson());
-		String query = "INSERT INTO id_person (id, person_name, person_password) VALUES ("+id.idPerson()+", 'Vasya', 1234)";
-
-		Class.forName("com.mysql.jdbc.Driver");
-		
-		Connection conn =  new Connection(url, user, password);
-		
-		connect = conn.connection();
-		
-//		stm = connect.createStatement();
-		
-		PreparedStatement preparedStmt = (PreparedStatement) connect.prepareStatement(query);
-		
-		preparedStmt.execute();
-		
-//		while (rs.next()) {
-//            String str = rs.getString("id")+"|"+rs.getString("person_name")+"|"+rs.getString("person_password");
-//            System.out.println("Contact:" + str);
-//        }		
-		
-		
-        preparedStmt.close();
-        connect.close();
+	public static void main(String[] args) throws SQLException, ClassNotFoundException, IllegalAccessException {	
         
 		JFrame frame = new JFrame("AddPerson");
 		JPanel panelMain = new JPanel(new GridLayout(6,10));	
@@ -82,6 +54,31 @@ public class Starter {
 			}
 		});
 		
+		ID id = new ID();
+		String name_person = "Vasya";
+		
+		String query = "INSERT INTO id_person (id, person_name, person_password) VALUES ("+id.idPerson()+",'"+name_person+"', 1234)";
+
+		Class.forName("com.mysql.jdbc.Driver");
+		
+		Connection conn =  new Connection(url, user, password);
+		
+		connect = conn.connection();
+		
+//		stm = connect.createStatement();
+		
+		PreparedStatement preparedStmt = (PreparedStatement) connect.prepareStatement(query);
+		
+		
+		
+//		while (rs.next()) {
+//            String str = rs.getString("id")+"|"+rs.getString("person_name")+"|"+rs.getString("person_password");
+//            System.out.println("Contact:" + str);
+//        }    
+		
+		preparedStmt.close();
+	    connect.close();
+		
 		JButton add = new JButton("Add");
 		
 		add.addActionListener(new ActionListener() {
@@ -91,9 +88,15 @@ public class Starter {
 				System.out.println("Add: ");
 				System.out.println(name.getText());
 				System.out.println(pass.getPassword());
-				System.out.println(id.idPerson());				
+				System.out.println(id.idPerson());
+				try {
+					preparedStmt.execute();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
-		});
+		});	
 		
 		panelMain.add(name);
 		panelMain.add(pass);
@@ -103,7 +106,7 @@ public class Starter {
 		frame.add(panelMain);
 		frame.setLocation(400, 400);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setVisible(true);
+		frame.setVisible(true);		 
 		
 	}
 }
