@@ -36,9 +36,9 @@ public class Starter {
 		JPanel panelMain = new JPanel(new GridLayout(6,10));	
 		
 		JTextField name = new JTextField();
-//		JTextField pass = new JTextField();
+		JTextField pass = new JTextField();
 		
-		JPasswordField pass = new JPasswordField();
+//		JPasswordField pass = new JPasswordField();
 		name.setText("Name");
 		pass.setText("Pass");
 		
@@ -55,29 +55,16 @@ public class Starter {
 		});
 		
 		ID id = new ID();
-		String name_person = "Vasya";
-		
-		String query = "INSERT INTO id_person (id, person_name, person_password) VALUES ("+id.idPerson()+",'"+name_person+"', 1234)";
-
 		Class.forName("com.mysql.jdbc.Driver");
 		
-		Connection conn =  new Connection(url, user, password);
-		
-		connect = conn.connection();
+		Connection conn =  new Connection(url, user, password);	
 		
 //		stm = connect.createStatement();
-		
-		PreparedStatement preparedStmt = (PreparedStatement) connect.prepareStatement(query);
-		
-		
 		
 //		while (rs.next()) {
 //            String str = rs.getString("id")+"|"+rs.getString("person_name")+"|"+rs.getString("person_password");
 //            System.out.println("Contact:" + str);
-//        }    
-		
-		preparedStmt.close();
-	    connect.close();
+//        }		
 		
 		JButton add = new JButton("Add");
 		
@@ -87,16 +74,21 @@ public class Starter {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Add: ");
 				System.out.println(name.getText());
-				System.out.println(pass.getPassword());
+				System.out.println(pass.getText());
 				System.out.println(id.idPerson());
 				try {
+					connect = conn.connection();				
+					String query = "INSERT INTO id_person (id, person_name, person_password) VALUES ("+id.idPerson()+",'"+name.getText()+"','"+pass.getText()+"')";
+					
+					PreparedStatement preparedStmt = (PreparedStatement) connect.prepareStatement(query);
 					preparedStmt.execute();
+					preparedStmt.close();
+				    connect.close();
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
-		});	
+		});
 		
 		panelMain.add(name);
 		panelMain.add(pass);
