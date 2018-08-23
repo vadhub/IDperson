@@ -13,7 +13,6 @@ import java.sql.Statement;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import com.abg.connect.Connection;
@@ -77,7 +76,7 @@ public class Starter {
 				System.out.println(pass.getText());
 				System.out.println(id.idPerson());
 				try {
-					connect = conn.connection();				
+					connect = conn.connection();
 					String query = "INSERT INTO id_person (id, person_name, person_password) VALUES ("+id.idPerson()+",'"+name.getText()+"','"+pass.getText()+"')";
 					
 					PreparedStatement preparedStmt = (PreparedStatement) connect.prepareStatement(query);
